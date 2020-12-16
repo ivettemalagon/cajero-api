@@ -16,6 +16,17 @@ from fastapi import HTTPException   #Lanza los errores
 
 api = FastAPI()     #Crea la aplicación
 
+#Añadiendo políticas CORS a la API
+from fastapi.middleware.cors import CORSMiddleware
+origins = [
+    "http://localhost.tiangolo.com", "https://localhost.tiangolo.com",
+    "http://localhost", "http://localhost:8080",
+]
+api.add_middleware(
+    CORSMiddleware, allow_origins=origins,
+    allow_credentials=True, allow_methods=["*"], allow_headers=["*"],
+)
+
 #Bloque 3: se implementa la funcionalidad auth_user:
 @api.post("/user/auth/")            #decorador @api.{método HTTP}
 async def auth_user(user_in: UserIn):   #Async=Asincrono. Tan pronto llegue la solicitud la pone a correr. Crea un thread
